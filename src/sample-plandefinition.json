@@ -1,0 +1,45 @@
+{
+  "resourceType": "PlanDefinition",
+  "id": "example",
+  "title": "Example PlanDefinition",
+  "status": "draft",
+  "action": [
+    {
+      "id": "action-1",
+      "title": "Initial Assessment",
+      "description": "Perform an initial assessment of the patient.",
+      "action": [
+        {
+          "id": "sub-action-1-1",
+          "title": "Collect Vital Signs",
+          "description": "Measure temperature, blood pressure, and heart rate."
+        },
+        {
+          "id": "sub-action-1-2",
+          "title": "Review Medical History",
+          "description": "Check for any pre-existing conditions."
+        }
+      ]
+    },
+    {
+      "id": "action-2",
+      "title": "Diagnosis",
+      "condition": [
+        {
+          "kind": "applicability",
+          "expression": {
+            "language": "text/cql",
+            "expression": "Patient.age > 18",
+            "description": "Is patient an adult?"
+          }
+        }
+      ],
+      "description": "Formulate a diagnosis based on the assessment."
+    },
+    {
+        "id": "action-3",
+        "title": "Treatment",
+        "description": "Administer treatment based on the diagnosis."
+    }
+  ]
+}

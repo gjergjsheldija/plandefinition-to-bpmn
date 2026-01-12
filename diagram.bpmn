@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="exclusive-breastfeeding-intervention-01" name="Exclusive Breastfeeding Intervention-01" isExecutable="true">
+    <bpmn:documentation>Exclusive breastfeeding intervention intended to improve outcomes for exclusive breastmilk feeding of newborns by ensuring that an appropriate breastfeeding readiness assessment order is created if necessary.</bpmn:documentation>
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateEvent_2" name="Trigger: Admission, Birth, Infant Transfer to Recovery, Transfer to Post-Partum">
+      <bpmn:documentation>Triggers: named-event: Admission; named-event: Birth; named-event: Infant Transfer to Recovery; named-event: Transfer to Post-Partum
+Condition 1: Should Create Assessment Order (text/cql-identifier)</bpmn:documentation>
+      <bpmn:incoming>temp_incoming</bpmn:incoming>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="IntermediateEvent_2" />
+    <bpmn:exclusiveGateway id="Gateway_3" name="Decision: Should Create Assessment Order">
+      <bpmn:incoming>temp_incoming</bpmn:incoming>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="IntermediateEvent_2" targetRef="Gateway_3" />
+    <bpmn:task id="Task_4" name="Mother should be administered a breastfeeding readiness assessment.">
+      <bpmn:documentation>Triggers: named-event: Admission; named-event: Birth; named-event: Infant Transfer to Recovery; named-event: Transfer to Post-Partum
+Condition 1: Should Create Assessment Order (text/cql-identifier)</bpmn:documentation>
+      <bpmn:incoming>temp_incoming</bpmn:incoming>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Gateway_3" targetRef="Task_4" name="Yes">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Should Create Assessment Order</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="Task_5" name="Create the breastfeeding readiness assessment order.">
+      <bpmn:documentation>Text: Administer a breastfeeding readiness assessment.
+Type: create
+Dynamic Value 1: / = Create Breastfeeding Risk Assessment (text/cql-identifier)</bpmn:documentation>
+      <bpmn:incoming>temp_incoming</bpmn:incoming>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_4" targetRef="Task_5" />
+    <bpmn:task id="Task_6" name="Notify the provider to sign the order.">
+      <bpmn:documentation>Text: A Breastfeeding Readiness Assessment is recommended, please authorize or reject the order.
+Type: create
+Dynamic Value 1: / = Communication Request to Provider (text/cql-identifier)</bpmn:documentation>
+      <bpmn:incoming>temp_incoming</bpmn:incoming>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_5" targetRef="Task_6" />
+    <bpmn:endEvent id="EndEvent_7" name="End">
+      <bpmn:incoming>temp_incoming</bpmn:incoming>
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_6" targetRef="EndEvent_7" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="exclusive-breastfeeding-intervention-01">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="100" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateEvent_2_di" bpmnElement="IntermediateEvent_2">
+        <dc:Bounds x="250" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="136" y="68" />
+        <di:waypoint x="250" y="68" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_3_di" bpmnElement="Gateway_3">
+        <dc:Bounds x="250" y="43" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="286" y="68" />
+        <di:waypoint x="250" y="68" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_4_di" bpmnElement="Task_4">
+        <dc:Bounds x="250" y="28" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="300" y="68" />
+        <di:waypoint x="250" y="68" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_5_di" bpmnElement="Task_5">
+        <dc:Bounds x="250" y="28" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="350" y="68" />
+        <di:waypoint x="250" y="68" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_6_di" bpmnElement="Task_6">
+        <dc:Bounds x="250" y="28" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="350" y="68" />
+        <di:waypoint x="250" y="68" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_7_di" bpmnElement="EndEvent_7">
+        <dc:Bounds x="400" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="350" y="68" />
+        <di:waypoint x="400" y="68" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
